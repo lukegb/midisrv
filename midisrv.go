@@ -20,6 +20,7 @@ package midisrv
 import (
 	"fmt"
 	"io"
+	"log"
 
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/rakyll/portmidi"
@@ -44,6 +45,7 @@ func (s *server) Output(stream pb.MIDIService_OutputServer) error {
 		switch d := msg.Data.(type) {
 		case *pb.MIDIWriteRequest_ImmediateEvent:
 			e := d.ImmediateEvent
+			log.Printf("immevent: %#v", e)
 			if err := s.s.WriteShort(e.Status, e.Data1, e.Data2); err != nil {
 				return err
 			}
@@ -51,6 +53,7 @@ func (s *server) Output(stream pb.MIDIService_OutputServer) error {
 			es := d.Events.Events
 			var mes []portmidi.Event
 			for _, e := range es {
+				log.Printf("event: %#v", e)
 				mes = append(mes, portmidi.Event{
 					Timestamp: portmidi.Timestamp(e.Timestamp),
 					Status:    e.Status,
