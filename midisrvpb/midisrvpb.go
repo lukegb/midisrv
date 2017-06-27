@@ -30,17 +30,17 @@ const (
 func NoteOn(channel uint8, note Note, velocity uint8) *MIDIEvent {
 	return &MIDIEvent{
 		Timestamp: -1,
-		Status: int64(uint8(eventNoteOn) | channel),
-		Data1:  int64(0x7f & note),
-		Data2:  int64(0x7f & velocity),
+		Status:    int64(uint8(eventNoteOn) | channel),
+		Data1:     int64(0x7f & note),
+		Data2:     int64(0x7f & velocity),
 	}
 }
 
 func NoteOff(channel uint8, note Note, velocity uint8) *MIDIEvent {
 	return &MIDIEvent{
 		Timestamp: -1,
-		Status: int64(uint8(eventNoteOff) | channel),
-		Data1:  int64(0x7f & note),
-		Data2:  int64(0x7f & velocity),
+		Status:    int64(uint8(eventNoteOff) | channel),
+		Data1:     int64(0x7f & note),
+		Data2:     int64(0x7f & velocity),
 	}
 }
